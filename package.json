@@ -1,0 +1,21 @@
+{
+  "name": "brendon-starwars-datasource",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "grafana-toolkit plugin:build",
+    "test": "grafana-toolkit plugin:test",
+    "dev": "grafana-toolkit plugin:dev",
+    "watch": "grafana-toolkit plugin:dev --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grafana/data": "^8.5.0",
+    "@grafana/runtime": "^8.5.0",
+    "@grafana/toolkit": "^8.5.0",
+    "@grafana/ui": "^8.5.0"
+  }
+}
