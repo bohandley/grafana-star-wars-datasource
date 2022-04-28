@@ -4,7 +4,9 @@ import {
   DataQueryRequest,
   toDataFrame,
   MutableDataFrame,
+  MetricFindValue,
 } from '@grafana/data';
+import { interpolateQuery } from './interpolate';
 import { StarWarsConfig, StarWarsQuery } from './types';
 
 export class StarWarsDataSource extends DataSourceApi<StarWarsQuery> {
@@ -13,7 +15,7 @@ export class StarWarsDataSource extends DataSourceApi<StarWarsQuery> {
   }
   async query(request: DataQueryRequest<StarWarsQuery>) {
     if (request.targets && request.targets.length > 0) {
-      const actualQuery = request.targets[0];
+      let actualQuery = interpolateQuery(request.targets[0]);
       switch (actualQuery.queryType) {
         case 'films-list-by-people-id':
           const individualPeopleURL = `https://swapi.dev/api/people/${actualQuery.peopleId}`;
@@ -62,5 +64,8 @@ export class StarWarsDataSource extends DataSourceApi<StarWarsQuery> {
       status: 'success',
       message: 'plugin working',
     });
+  }
+  metricFindQuery(): Promise<MetricFindValue[]> {
+    return Promise.resolve([{ text: '1' }, { text: '2' }, { text: '3' }]);
   }
 }

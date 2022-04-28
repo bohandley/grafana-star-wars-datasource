@@ -7,7 +7,7 @@ export type StarwarsQueryType = 'people' | 'planets' | 'films-list-by-people-id'
 type StarwarsBaseQuery<Q extends StarwarsQueryType> = { queryType: Q } & DataQuery;
 type StarwarsPeopleQuery = {} & StarwarsBaseQuery<'people'>;
 type StarwarsPlanetsQuery = {} & StarwarsBaseQuery<'planets'>;
-type StarwarsFilsByPeopleQuery = { peopleId: number } & StarwarsBaseQuery<'films-list-by-people-id'>;
+type StarwarsFilsByPeopleQuery = { peopleId: string } & StarwarsBaseQuery<'films-list-by-people-id'>;
 export type StarWarsQuery = StarwarsPeopleQuery | StarwarsPlanetsQuery | StarwarsFilsByPeopleQuery;
 
 // type Profession = 'doctor' | 'engineer';
