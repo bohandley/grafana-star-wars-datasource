@@ -1,4 +1,4 @@
-import { StarWarsQuery } from './types';
+import { StarWarsQuery, StarWarsVariableQuery } from './types';
 import { getTemplateSrv } from '@grafana/runtime';
 
 export const interpolateQuery = (query: StarWarsQuery): StarWarsQuery => {
@@ -8,5 +8,9 @@ export const interpolateQuery = (query: StarWarsQuery): StarWarsQuery => {
       peopleId: getTemplateSrv().replace(query.peopleId || '1'),
     };
   }
+  return query;
+};
+
+export const interpolateVariableQuery = (query: StarWarsVariableQuery): StarWarsVariableQuery => {
   return query;
 };
