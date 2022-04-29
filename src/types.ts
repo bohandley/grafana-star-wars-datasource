@@ -10,27 +10,31 @@ type StarwarsPlanetsQuery = {} & StarwarsBaseQuery<'planets'>;
 type StarwarsFilsByPeopleQuery = { peopleId: string } & StarwarsBaseQuery<'films-list-by-people-id'>;
 export type StarWarsQuery = StarwarsPeopleQuery | StarwarsPlanetsQuery | StarwarsFilsByPeopleQuery;
 
-export type VariableQueryType = 'people-ids' | 'vehicle-ids' | 'starships-ids' | 'hair-colors';
-type VariableQueryPeopleIDs = { queryType: 'people-ids'; hair_color?: string };
+export type VariableQueryType = 'people-ids' | 'vehicle-ids' | 'starships-ids' | 'hair-colors' | 'gender';
+type VariableQueryPeopleIDs = { queryType: 'people-ids'; hairColor?: string; gender?: string };
 type VariableQueryVehicleIDs = { queryType: 'vehicle-ids' };
 type VariableQueryStarShipIDs = { queryType: 'starships-ids' };
 type VariableQueryHairColors = { queryType: 'hair-colors' };
+type VariableQueryGender = { queryType: 'gender' };
+
 export type StarWarsVariableQuery =
   | VariableQueryPeopleIDs
   | VariableQueryVehicleIDs
   | VariableQueryStarShipIDs
-  | VariableQueryHairColors;
+  | VariableQueryHairColors
+  | VariableQueryGender;
 
 export type SWPeople = {
   name: string;
   url: string;
   birth_year?: string;
-  hair_color?: string;
+  hairColor?: string;
   created?: string;
   films?: string[];
   species?: string[];
   starships?: string[];
   vehicles?: string[];
+  gender?: string;
 };
 
 // type Profession = 'doctor' | 'engineer';

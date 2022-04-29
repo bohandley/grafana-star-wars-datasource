@@ -6,7 +6,7 @@ import {
   MutableDataFrame,
   MetricFindValue,
 } from '@grafana/data';
-import { interpolateQuery } from './interpolate';
+import { interpolateQuery, interpolateVariableQuery } from './interpolate';
 import { StarWarsConfig, StarWarsQuery, StarWarsVariableQuery, SWPeople } from './types';
 
 export class StarWarsDataSource extends DataSourceApi<StarWarsQuery> {
@@ -73,11 +73,18 @@ export class StarWarsDataSource extends DataSourceApi<StarWarsQuery> {
       .then((res) => {
         return res?.results || [];
       });
-    switch (query.queryType) {
+    let interpolatedQuery = interpolateVariableQuery(query);
+    switch (interpolatedQuery.queryType) {
       case 'hair-colors':
         return Promise.resolve(
           peopleList.map((p) => {
-            return { text: p.hair_color || 'n/a', value: p.hair_color };
+            return { text: p.hairColor || 'n/a', value: p.hairColor };
+          })
+        );
+      case 'gender':
+        return Promise.resolve(
+          peopleList.map((p) => {
+            return { text: p.gender || 'n/a', value: p.gender };
           })
         );
       case 'starships-ids':
@@ -95,16 +102,23 @@ export class StarWarsDataSource extends DataSourceApi<StarWarsQuery> {
           })
         );
       case 'people-ids':
-      default:
-        if (query.hair_color) {
+        if (interpolatedQuery.hairColor && interpolatedQuery.gender) {
+          let hairColor: string = interpolatedQuery.hairColor;
+          let gender: string = interpolatedQuery.gender;
           return Promise.resolve(
             peopleList
-              .filter((p) => p.hair_color === query.hair_color)
+              .filter((p) => p.hairColor === hairColor && p.gender === gender)
               .map((p) => {
                 return { text: p.name, value: p.url.split('/')[5] };
               })
           );
         }
+        return Promise.resolve(
+          peopleList.map((p) => {
+            return { text: p.name, value: p.url.split('/')[5] };
+          })
+        );
+      default:
         return Promise.resolve(
           peopleList.map((p) => {
             return { text: p.name, value: p.url.split('/')[5] };

@@ -12,5 +12,12 @@ export const interpolateQuery = (query: StarWarsQuery): StarWarsQuery => {
 };
 
 export const interpolateVariableQuery = (query: StarWarsVariableQuery): StarWarsVariableQuery => {
+  if (query.queryType === 'people-ids') {
+    return {
+      ...query,
+      hairColor: getTemplateSrv().replace(query.hairColor || 'n/a'),
+      gender: getTemplateSrv().replace(query.gender || 'n/a'),
+    };
+  }
   return query;
 };
